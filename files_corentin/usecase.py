@@ -1,7 +1,7 @@
 import pandas as pd
 pd.set_option('display.max_columns', None)
 import numpy as np
-from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.preprocessing import StandardScaler, LabelEncoder, MultiLabelBinarizer
 from sklearn.cluster import KMeans
 from ast import literal_eval
 
@@ -12,101 +12,87 @@ class UserClustering:
         self.scaler = StandardScaler()
         self.kmeans = KMeans(n_clusters=n_clusters, random_state=42)
         
-    def _process_text_column(self, column):
-        """Encode les colonnes textuelles"""
-        if column.name not in self.label_encoders:
-            self.label_encoders[column.name] = LabelEncoder()
-        return self.label_encoders[column.name].fit_transform(column)
-    
-
-    def explode_columns_with_lists(self, df):
+    def preprocess_data_for_knn(self, df):
         """
-        Explose les colonnes contenant des listes dans un DataFrame.
+        Prépare les données pour une clusterisation avec KNN.
         
         Args:
-        - df (pd.DataFrame): Le DataFrame à traiter.
+        - df (pd.DataFrame): Le DataFrame brut.
 
         Returns:
-        - pd.DataFrame: Le DataFrame avec les colonnes de listes éclatées.
+        - pd.DataFrame: Le DataFrame prêt pour le machine learning.
         """
-        new_df = df.copy()  # Copie pour ne pas modifier l'original
-        for col in new_df.columns:
-            print(col, new_df[col].dtype)
-            # Vérifie si tous les éléments de la colonne sont des listes
-            if new_df[col].str.contains(r'[\[\{]').any():
+        df = df.copy()
+        
+        # Encodage de 'billettique_type'
+        le = LabelEncoder()
+        df['billettique_type'] = le.fit_transform(df['billettique_type'])
+        
+        # Remplacement des NaN dans 'billettique_tickets_left' par 0
+        df['billettique_tickets_left'] = df['billettique_tickets_left'].fillna(0)
+        
+        # Encodage de la colonne 'PMR' (False -> 0, True -> 1)
+        df['PMR'] = df['PMR'].astype(int)
+        
+        # Encodage des 'centres d'intérêts' avec MultiLabelBinarizer
+        mlb = MultiLabelBinarizer()
+        interests = df["centres d'intérêts"].apply(eval)  # Convert strings to lists
+        interest_encoded = mlb.fit_transform(interests)
+        interest_df = pd.DataFrame(interest_encoded, columns=mlb.classes_, index=df.index)
+        df = pd.concat([df, interest_df], axis=1)
+        df.drop(columns=["centres d'intérêts"], inplace=True)
+        
+        # Trajets : Compter le nombre de trajets
+        df['nombre_trajets'] = df['trajets'].apply(lambda x: len(eval(x)))
+        df.drop(columns=['trajets'], inplace=True)
+        
+        # Lieux favoris : Calculer la moyenne des coordonnées géographiques
+        def average_coordinates(lieux):
+            lieux = eval(lieux)
+            avg_lat = np.mean([coord[0] for coord in lieux])
+            avg_lon = np.mean([coord[1] for coord in lieux])
+            return avg_lat, avg_lon
 
-                # Trouver la longueur maximale des listes dans cette colonne
-                max_length = new_df[col].apply(len).max()
-                print(max_length)
-                
-                # Créer autant de nouvelles colonnes qu'il y a de valeurs dans les listes
-                for i in range(max_length):
-                    new_df[f"{col}_{i}"] = new_df[col].apply(lambda x: x[i] if i < len(x) else None)
-                
-                # Supprimer la colonne d'origine
-                new_df.drop(columns=[col], inplace=True)
-        return new_df
+        df[['lieux_avg_lat', 'lieux_avg_lon']] = df['lieux favoris'].apply(
+            lambda x: pd.Series(average_coordinates(x))
+        )
+        df.drop(columns=['lieux favoris'], inplace=True)
+        
+        # Conserver les colonnes numériques directement
+        numeric_cols = ['km de marche dans les 90 derniers jours', 'intérêt événements']
+        
+        # Retourner le DataFrame final
+        return df[numeric_cols + ['user_id', 'billettique_type', 'billettique_tickets_left', 'PMR', 
+                                'nombre_trajets', 'lieux_avg_lat', 'lieux_avg_lon'] + list(mlb.classes_)]
 
-    
-    def _detect_and_process_column(self, column):
-        """Détecte et traite chaque type de colonne"""
-        if column.dtype == 'object':
-            try:
-                # Essaie de convertir en nombre
-                return pd.to_numeric(column)
-            except:
-                # Vérifie si c'est une liste
-                if column.str.contains(r'[\[\{]').any():
-                    list_df = self._process_list_column(column)
-                    # Retourner uniquement la première colonne pour maintenir la compatibilité
-                    return list_df.iloc[:, 0]
-                else:
-                    return self._process_text_column(column)
-        return column
     
     def fit_transform(self, df):
         """Transforme le dataframe et effectue le clustering"""
         # Copie du dataframe
         processed_df = pd.DataFrame()
         processed_df['user_id'] = df['user_id']
-        
-        # Traitement de chaque colonne sauf user_id
-        feature_columns = [col for col in df.columns if col != 'user_id']
-        for col in feature_columns:
-            result = self._detect_and_process_column(df[col])
-            print(result)
-            if isinstance(result, pd.DataFrame):
-                # Si le résultat est un DataFrame (cas des listes), ajouter toutes les colonnes
-                for new_col in result.columns:
-                    processed_df[new_col] = result[new_col]
-                    print(new_col, result[new_col].dtype)
-            else:
-                # Sinon, ajouter la colonne directement
-                processed_df[col] = result
+
+        processed_df = self.preprocess_data_for_knn(df)
         
         # Normalisation des données
-        #features = processed_df.drop('user_id', axis=1).values
-        #scaled_features = self.scaler.fit_transform(features)
+        features = processed_df.drop('user_id', axis=1).values
+        scaled_features = self.scaler.fit_transform(features)
         
         # Application du clustering
-        #clusters = self.kmeans.fit_predict(scaled_features)
+        clusters = self.kmeans.fit_predict(scaled_features)
         
         # Création du résultat
-        #result = pd.DataFrame({
-        #    'user_id': df['user_id'],
-        #    'cluster': clusters
-        #})
+        result = pd.DataFrame({
+            'user_id': df['user_id'],
+            'cluster': clusters
+        })
         
-        return processed_df
+        return result
+
 
 df = pd.read_csv('./data/data_generic.csv', sep=';')
 clusterer = UserClustering(n_clusters=3)
-new_df = clusterer.explode_columns_with_lists(df)
+new_df = clusterer.fit_transform(df)
 print(new_df)
 
-# Exemple d'utilisation
-if __name__ == "__main__":
-    df = pd.read_csv('./data/data_generic.csv', sep=';')
-    clustered_df = cluster_users(df)
-    print(clustered_df)
-
+new_df['cluster'].value_counts()
