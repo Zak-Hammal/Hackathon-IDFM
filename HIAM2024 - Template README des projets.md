@@ -19,7 +19,7 @@ L'objectif de ce projet est de proposer une solution de personnalisation des ser
 
 ### Méthodologie
 
-![Aperçu du projet](images/Capture d'écran 2024-11-22 095050.png)
+![Aperçu de la tab](images/tab.png)
 
 - **Clustering des utilisateurs** : Pour mieux comprendre les besoins des usagers, nous avons appliqué des techniques de clustering sur les données afin de dégager des profils types. Ces profils incluent des catégories telles que les "voyageurs réguliers", les "touristes" et les "personnes à mobilité réduite (PMR)". Ce regroupement a permis de personnaliser plus efficacement les messages envoyés.
 ![Aperçu du projet](images/coude.png)
