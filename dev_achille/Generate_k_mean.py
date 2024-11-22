@@ -6,7 +6,7 @@ from sklearn.metrics import silhouette_score
 import matplotlib.pyplot as plt
 
 # Charger les données enregistrées
-# df = pd.read_csv('base_donnees_utilisateurs_paris.csv')
+df = pd.read_csv('data/data_clustered.csv')  # Chargement du premier fichier
 
 # Préparation des données pour le clustering
 # Nous allons utiliser les colonnes numériques et convertir certaines colonnes qualitatives en indicateurs
