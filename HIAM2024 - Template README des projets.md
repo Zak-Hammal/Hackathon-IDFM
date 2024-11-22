@@ -1,4 +1,4 @@
-# Template ReadMe des projets - Personnalisation des Services de Mobilité
+# ReadMe - Personnalisation des Services de Mobilité
 
 Ce projet a été développé dans le cadre du [Hackathon IA et Mobilités](https://www.iledefrance-mobilites.fr/actualites/hackathon-2024-ia-et-mobilites), organisé par Île-de-France Mobilités les 21 et 22 novembre 2024. Pour en savoir plus, voici le [Guide des participants et participantes](https://github.com/IleDeFranceMobilites/hackathon_ia_mobilites_2024).
 
