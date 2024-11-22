@@ -19,6 +19,8 @@ L'objectif de ce projet est de proposer une solution de personnalisation des ser
 
 ### Méthodologie
 
+![Aperçu du projet](images/Capture d'écran 2024-11-22 095050.png)
+
 - **Clustering des utilisateurs** : Pour mieux comprendre les besoins des usagers, nous avons appliqué des techniques de clustering sur les données afin de dégager des profils types. Ces profils incluent des catégories telles que les "voyageurs réguliers", les "touristes" et les "personnes à mobilité réduite (PMR)". Ce regroupement a permis de personnaliser plus efficacement les messages envoyés.
 ![Aperçu du projet](images/coude.png)
 - **Génération de messages personnalisés** : Nous avons utilisé la configuration LLM (Large Language Model) disponible dans l'environnement du hackathon pour générer des messages personnalisés en fonction des caractéristiques spécifiques de chaque utilisateur. Les messages sont générés uniquement lorsque cela est pertinent (par exemple, lorsque l'abonnement est sur le point d'expirer ou que le nombre de tickets est bas).
