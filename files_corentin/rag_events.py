@@ -37,8 +37,6 @@ def obtenir_evenements(df, colonne_datetime, n_jours, colonnes_sortie, date_refe
     
     return df_filtre.sort_values(colonne_datetime)
 
-print(df.columns)
-
 # Appel de la fonction
 nouveau_df = obtenir_evenements(
     df, 
@@ -47,8 +45,3 @@ nouveau_df = obtenir_evenements(
     colonnes_sortie=['Identifiant', 'Titre', 'Description', 'Première date - Début', 'Coordonnées géographiques'], 
     date_reference=pd.Timestamp('2024-05-21')
 )
-
-print(nouveau_df)
-
-
-

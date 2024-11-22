@@ -63,7 +63,7 @@ def generate_ticket_info():
         tickets_left = None
     elif type_abo == "Ticket t+":
         # Nombre de billets restants entre 0 et 4 majoritairement
-        tickets_left = np.random.choice([0, 1, 2, 3, 4], p=[0.4, 0.2, 0.2, 0.1, 0.1])
+        tickets_left = np.random.choice([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], p=[0.3, 0.2, 0.1, 0.1, 0.05, 0.05, 0.05, 0.05])
         end_date = None  # Pas de date de fin pour les tickets simples
 
     return type_abo, end_date, tickets_left
