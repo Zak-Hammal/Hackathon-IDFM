@@ -1,1 +1,0 @@
-prompt_test = " Réponds en Francais et en json : {input}"
