@@ -1,0 +1,32 @@
+{
+  "itineraire_id": "itin_006",
+  "depart": "Chatelet, Paris",
+  "arrivee": "Fontainebleau",
+  "date": "2025-11-13",
+  "segments": [
+    {
+      "mode": "velo",
+      "distance_km": 2.5,
+      "duree_minutes": 10,
+      "co2_kg": 0
+    },
+    {
+      "mode": "train",
+      "distance_km": 55.0,
+      "duree_minutes": 45,
+      "co2_kg": 1.2,
+      "note": "Vélo transporté dans le train"
+    },
+    {
+      "mode": "velo",
+      "distance_km": 4.0,
+      "duree_minutes": 15,
+      "co2_kg": 0
+    }
+  ],
+  "tags": ["ecologic", "bike", "multimodal"],
+  "co2_total_kg": 1.2,
+  "distance_totale_km": 61.5,
+  "duree_totale_minutes": 70
+}
+

@@ -1,0 +1,32 @@
+{
+  "itineraire_id": "itin_005",
+  "depart": "Montparnasse, Paris",
+  "arrivee": "Château de Versailles",
+  "date": "2025-11-13",
+  "segments": [
+    {
+      "mode": "walk",
+      "distance_km": 0.4,
+      "duree_minutes": 5,
+      "co2_kg": 0
+    },
+    {
+      "mode": "covoiturage",
+      "distance_km": 15.8,
+      "duree_minutes": 35,
+      "co2_kg": 0.7,
+      "note": "Émissions CO2 divisées par le nombre de passagers (4 personnes)"
+    },
+    {
+      "mode": "walk",
+      "distance_km": 0.3,
+      "duree_minutes": 4,
+      "co2_kg": 0
+    }
+  ],
+  "tags": ["partage", "economique"],
+  "co2_total_kg": 0.7,
+  "distance_totale_km": 16.5,
+  "duree_totale_minutes": 44
+}
+

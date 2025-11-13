@@ -1,0 +1,31 @@
+{
+  "itineraire_id": "itin_002",
+  "depart": "Neuilly-sur-Seine",
+  "arrivee": "Aéroport CDG",
+  "date": "2025-11-13",
+  "segments": [
+    {
+      "mode": "walk",
+      "distance_km": 0.2,
+      "duree_minutes": 3,
+      "co2_kg": 0
+    },
+    {
+      "mode": "voiture",
+      "distance_km": 18.5,
+      "duree_minutes": 25,
+      "co2_kg": 3.2
+    },
+    {
+      "mode": "walk",
+      "distance_km": 0.1,
+      "duree_minutes": 2,
+      "co2_kg": 0
+    }
+  ],
+  "tags": ["rapide"],
+  "co2_total_kg": 3.2,
+  "distance_totale_km": 18.8,
+  "duree_totale_minutes": 30
+}
+

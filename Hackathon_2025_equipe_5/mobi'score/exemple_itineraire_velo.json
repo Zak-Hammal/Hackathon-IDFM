@@ -1,0 +1,31 @@
+{
+  "itineraire_id": "itin_004",
+  "depart": "Bastille, Paris",
+  "arrivee": "Bois de Vincennes",
+  "date": "2025-11-13",
+  "segments": [
+    {
+      "mode": "walk",
+      "distance_km": 0.3,
+      "duree_minutes": 4,
+      "co2_kg": 0
+    },
+    {
+      "mode": "velo",
+      "distance_km": 5.2,
+      "duree_minutes": 18,
+      "co2_kg": 0
+    },
+    {
+      "mode": "walk",
+      "distance_km": 0.2,
+      "duree_minutes": 3,
+      "co2_kg": 0
+    }
+  ],
+  "tags": ["ecologic", "bike", "reliable"],
+  "co2_total_kg": 0,
+  "distance_totale_km": 5.7,
+  "duree_totale_minutes": 25
+}
+

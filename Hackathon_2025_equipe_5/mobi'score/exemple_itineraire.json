@@ -1,0 +1,31 @@
+{
+  "itineraire_id": "itin_001",
+  "depart": "Gare du Nord, Paris",
+  "arrivee": "La Défense, Paris",
+  "date": "2025-11-13",
+  "segments": [
+    {
+      "mode": "walk",
+      "distance_km": 0.5,
+      "duree_minutes": 6,
+      "co2_kg": 0
+    },
+    {
+      "mode": "metro",
+      "distance_km": 8.2,
+      "duree_minutes": 15,
+      "co2_kg": 0.3
+    },
+    {
+      "mode": "walk",
+      "distance_km": 0.3,
+      "duree_minutes": 4,
+      "co2_kg": 0
+    }
+  ],
+  "tags": ["ecologic", "rapide"],
+  "co2_total_kg": 0.3,
+  "distance_totale_km": 9.0,
+  "duree_totale_minutes": 25
+}
+

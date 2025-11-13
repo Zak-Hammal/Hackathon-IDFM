@@ -1,0 +1,43 @@
+{
+  "itineraire_id": "itin_003",
+  "depart": "Versailles",
+  "arrivee": "Disneyland Paris",
+  "date": "2025-11-13",
+  "segments": [
+    {
+      "mode": "walk",
+      "distance_km": 0.4,
+      "duree_minutes": 5,
+      "co2_kg": 0
+    },
+    {
+      "mode": "voiture",
+      "distance_km": 5.0,
+      "duree_minutes": 10,
+      "co2_kg": 0.9
+    },
+    {
+      "mode": "train",
+      "distance_km": 35.0,
+      "duree_minutes": 40,
+      "co2_kg": 0.8
+    },
+    {
+      "mode": "bus",
+      "distance_km": 3.0,
+      "duree_minutes": 8,
+      "co2_kg": 0.2
+    },
+    {
+      "mode": "walk",
+      "distance_km": 0.6,
+      "duree_minutes": 7,
+      "co2_kg": 0
+    }
+  ],
+  "tags": ["multimodal"],
+  "co2_total_kg": 1.9,
+  "distance_totale_km": 44.0,
+  "duree_totale_minutes": 70
+}
+
